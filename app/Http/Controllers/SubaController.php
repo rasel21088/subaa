@@ -7,7 +7,10 @@ use App\Category;
 use App\Product;
 use App\Slider;
 use App\Root;
-use DB;
+//importing DB was wrong
+use Illuminate\Support\Facades\DB;
+
+
 
 class SubaController extends Controller
 {
@@ -29,13 +32,25 @@ class SubaController extends Controller
         ->get();
 		
         $roots = Root::where('publicationStatus',1)->get();
-
-        If ($count=count ($roots))
+        if(count($roots)==0)
+        {
+            $roots=NULL;
+        }
+        return view('front-end.home.home',[
+            'newSliders'   =>$newSliders,
+            'newProducts'  =>$newProducts,
+            'roots'        =>$roots,
+            'categories'   =>$categories
+        ]);
+        //what's that bro !!
+        /* If ($count=count ($roots))
         {
         $roots=NULL;
         }
         else {
-          $roots=roots;  
+        //what's this ?
+        //$roots=roots;
+
         }
         return $roots;   
         	return view('front-end.home.home',[
@@ -44,7 +59,7 @@ class SubaController extends Controller
             'roots'        =>$roots,
             'categories'   =>$categories
             
-        ]);
+        ]); */
     }
     public function categoryProduct($id){
         $categoryProducts = Product::where('category_id', $id)
